@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Alpine CDN Plugins -->
+    <script
+      defer
+      src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"
+    ></script>
+    <!-- Alpine CDN -->
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>AlpineJS</title>
+  </head>
+  <body
+    class="antialiased"
+    x-data="{'darkMode': false}"
+    x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
+    $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)));"
+    x-data
+  >
+    <div x-bind:class="{'dark': darkMode === true}">
+      <div
+        class="bg-gradient-to-br from-purple-100 via-cyan-50 to-pink-100 dark:from-slate-900 dark:to-cyan-900 dark:via-blue-900 text-slate-700 dark:text-slate-400"
+      >
+        <div class="max-w-screen-lg h-screen p-2 mx-auto">
+          <div class="flex flex-col items-end max-w-6xl pb-12 mx-auto">
+            <button
+              x-on:click="darkMode = !darkMode"
+              x-text="`Darkmode: ${darkMode ? 'On' : 'Off'}`"
+              :value="darkMode"
+              class="bg-gradient-to-br shadow-2xl shadow-purple-200 dark:shadow-slate-800 rounded-2xl w-32 h-10 border border-blue-800 dark:bg-blue-500 dark:border-blue-900 translatey-0 opacity-0 duration-1000"
+              x-intersect="$el.classList.add('translate-y-11', 'opacity-100')"
+            ></button>
+          </div>
+          <div
+            class="flex flex-col items-center scale-125 opacity-0 duration-1000"
+            x-intersect="$el.classList.add('scale-100', 'opacity-100')"
+          >
+            <img src="img/perfil.jpg" alt="" class="w-64 h-64 rounded-full" />
+          </div>
+          <div
+            x-data="{'isShowing': false}"
+            x-init="isShowing = JSON.parse(localStorage.getItem('isShowing'));
+          $watch('isShowing', value => localStorage.setItem('isShowing', JSON.stringify(value)));"
+            class="flex flex-col items-center pt-4 space-y-2 opacity-0 duration-1000 translate-y-full mx-auto"
+            x-intersect="$el.classList.add('opacity-100', 'translate-y-0')"
+          >
+            <button
+              x-on:click="isShowing = !isShowing"
+              x-text="isShowing ? 'Hide' : 'Show'"
+              :value="isShowing"
+              class="bg-gradient-to-br shadow-2xl shadow-cyan-200 dark:shadow-slate-800 rounded-2xl w-52 h-10 border border-blue-800 dark:bg-blue-500 dark:border-blue-900"
+            ></button>
+            <div
+              x-show="isShowing"
+              x-collapse.duration.500ms
+              class="prose prose-slate dark:prose-invert"
+            >
+              <h1 class="">Brincando com AlpineJS</h1>
+              <p class="">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
+                laboriosam? Laudantium modi labore accusantium! Laboriosam alias
+                adipisci, suscipit saepe deserunt unde porro pariatur ex enim
+                architecto incidunt dolorem nisi atque a. Tempora rerum
+                repudiandae eum accusantium ullam ipsa quidem eveniet.
+              </p>
+            </div>
+            <div
+              x-data="{
+            newPerson: '', 
+            people: [''],
+            add() {this.people.push(this.newPerson)}}"
+              class="flex flex-col items-center my-4 opacity-0 duration-1000 translate-y-full"
+              x-intersect="$el.classList.add('opacity-100', 'translate-y-0')"
+            >
+              <!-- input pra adicionar -->
+              <form
+                x-on:submit.prevent="add"
+                action=""
+                class="flex flex-col items-center space-y-4"
+              >
+                <input
+                  x-model="newPerson"
+                  type="text"
+                  class="w-64 h-8 bg-slate-300 dark:bg-slate-800 rounded-lg"
+                />
+                <button
+                  class="bg-gradient-to-br rounded-2xl w-32 h-8 border border-blue-800 dark:bg-blue-500 dark:border-blue-900"
+                >
+                  Add person
+                </button>
+              </form>
+
+              <!-- loop -->
+              <template x-for="person in people" class="">
+                <ul x-text="person"></ul>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
